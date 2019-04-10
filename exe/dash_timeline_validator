@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require "dash_timeline_validator"
+
+if ARGV.length == 0
+  p "You must pass the manifest!"
+  return -1
+end
+
+DashTimelineValidator::CLI.main(ARGV[0])
