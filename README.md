@@ -1,8 +1,14 @@
 # Dash Timeline Validator
 
-An MPEG Dash timeline validator. The validator parses the given MPD file (local or from the web) and shows information and errors of the timeline.
+This tool allows you to validate your [MPEG Dash](https://en.wikipedia.org/wiki/Dynamic_Adaptive_Streaming_over_HTTP) manifest to find if there are errors related to the presentation timeline model.
 
 ![Example](imgs/example.png)
+
+## Docker Usage
+
+```
+docker run -e VERIFY_SEGMENTS_DURATION=false --rm -it anafrombr/dash_timeline_validator https://storage.googleapis.com/shaka-live-assets/player-source.mpd
+```
 
 ## Installation
 
@@ -28,11 +34,15 @@ Run this program passing the manifest path.
 dash_timeline_validator https://storage.googleapis.com/shaka-live-assets/player-source.mpd
 ```
 
-To download and check the duration of every chunk, use the environment variable `VERIFY_SEGMENTS_DURATION` as `true`.
+### Options
 
-```
-VERIFY_SEGMENTS_DURATION=true dash_timeline_validator https://storage.googleapis.com/shaka-live-assets/player-source.mpd
-```
+- `ACCEPTABLE_DRIFT *(default 2)*` - the minimum duration drift acceptable between the sequential segments
+- `DEFAULT_PRESENTATION_DELAY *(default 10)*` - the delay in seconds of the live edge
+- `BUFFERED_SEGMENTS *(default 2)*` - the number of segments buffered by the player to generate the live edge
+- `VERIFY_SEGMENTS_DURATION *(default false)*` - check the duration of every segment when setted to `true` (warn: this will download every segment of the manifest)
+- `ANALYZER_FOLDER *(default "data/[HASH]")*` - folder used to download the files
+- `ANALYZER_MANIFEST_PATH *(default "#{ANALYZER_FOLDER}/manifest.mpd")*` - manifest path
+
 
 ## Development
 
