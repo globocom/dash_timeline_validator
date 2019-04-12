@@ -16,8 +16,7 @@ module DashTimelineValidator
 
         DashTimelineValidator::Log.info(DashTimelineValidator::Validator.analyze(manifest, mpd_content))
       rescue StandardError => e
-        DashTimelineValidator::Log.warn("There was an error: #{e.inspect}")
-        DashTimelineValidator::Log.warn(e.backtrace.join("\n\t"))
+        DashTimelineValidator::Log.error("There was an error: #{e.inspect}")
         DashTimelineValidator::Log.warn("Removing the folder #{DashTimelineValidator::Options::ANALYZER_FOLDER}")
         FileUtils.rm_rf DashTimelineValidator::Options::ANALYZER_FOLDER
       end
