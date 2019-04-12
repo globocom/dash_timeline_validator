@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dash_timeline_validator (0.1.0)
+    dash_timeline_validator (0.1.1)
       awesome_print (~> 1.8.0)
       iso8601 (~> 0.10.1)
       ox (~> 2.9.0)
