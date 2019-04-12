@@ -2,6 +2,7 @@
 
 An MPEG Dash timeline validator. The validator parses the given MPD file (local or from the web) and shows information and errors of the timeline.
 
+![Example](imgs/example.png)
 
 ## Installation
 
