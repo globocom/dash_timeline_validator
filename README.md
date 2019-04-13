@@ -43,6 +43,10 @@ dash_timeline_validator https://storage.googleapis.com/shaka-live-assets/player-
 - `ANALYZER_FOLDER *(default "data/[HASH]")*` - folder used to download the files
 - `ANALYZER_MANIFEST_PATH *(default "#{ANALYZER_FOLDER}/manifest.mpd")*` - manifest path
 
+### What does it validates?
+
+1. The advised timeline segments - basically, if the `<S t=<x> d=<y>>` [is summing up right](https://github.com/globocom/dash_timeline_validator/blob/master/lib/dash_timeline_validator/segment.rb#L24-L30). Our audio segments were drifting (due to a round we made) and this made the exoplayer behave as if it were buffering while most of the other players didn't show any problem at all. It optionally [download and check whether the advised duration](https://github.com/globocom/dash_timeline_validator/blob/master/lib/dash_timeline_validator/segment.rb#L45-L64) equals to the one being served.
+2. The advised timeline - if the [possible live edge is contained within the advised timeline](https://github.com/globocom/dash_timeline_validator/blob/master/lib/dash_timeline_validator/representation.rb#L34-L55) (to use client wall clock, ast, mbt, player buffer to see what should be one possible live edge)
 
 ## Development
 
