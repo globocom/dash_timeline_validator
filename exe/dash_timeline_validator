@@ -1,10 +1,38 @@
 #!/usr/bin/env ruby
 
+require "optparse"
 require "dash_timeline_validator"
+ 
+ARGV.push('-h') if ARGV.empty?
 
-if ARGV.length == 0
-  p "You must pass the manifest!"
-  return -1
-end
+options = {}
+OptionParser.new do |opts|
+    opts.banner = <<-BANNER
+    DASH Timeline Validator #{DashTimelineValidator::VERSION}
+    
+    Usage: dash_timeline_validator uri <arguments>
+    
+    Arguments:
+    BANNER
+    
+    opts.on("--acceptable_drift=ACCEPTABLE_DRIFT", "Minimum duration drift acceptable between the sequential segments", Integer) do |v|
+      options[:acceptable_drift] = v
+    end
+    opts.on("--presentation_delay=PRESENTATION_DELAY", "Delay in seconds of the live edge", Integer) do |v|
+      options[:presentation_delay] = v
+    end
+    opts.on("--buffered_segments=BUFFERED_SEGMENTS", "Number of segments buffered by the player to generate the live edge", Integer) do |v|
+      options[:buffered_segments] = v
+    end
+    opts.on("--verify_segments_duration=VERIFY_SEGMENTS_DURATION", "Check the duration of every segment when setted to true") do |v|
+      options[:verify_segments_duration] = v
+    end
+    opts.on("--analyzer_folder=ANALYZER_FOLDER", "Folder used to download the files") do |v|
+      options[:analyzer_folder] = v
+    end
+    opts.on("--analyzer_manifest_path=ANALYZER_MANIFEST_PATH", "Manifest path") do |v|
+      options[:analyzer_manifest_path] = v
+    end
+end.parse!
 
-DashTimelineValidator::CLI.main(ARGV[0])
+DashTimelineValidator::CLI.main(ARGV[0], options)

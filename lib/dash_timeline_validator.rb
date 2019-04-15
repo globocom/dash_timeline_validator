@@ -8,6 +8,8 @@ require "dash_timeline_validator/report"
 require "dash_timeline_validator/representation"
 require "dash_timeline_validator/segment"
 require "dash_timeline_validator/validator"
+require "dash_timeline_validator/version"
+
 
 module DashTimelineValidator
   class Error < StandardError; end

@@ -1,13 +1,29 @@
 require "fileutils"
 
 module DashTimelineValidator
+  DEFAUTLS = {
+    :acceptable_drift => true,
+    :presentation_delay => 10,
+    :buffered_segments => 2,
+    :verify_segments_duration => false
+  }
+
+  def self.set_options(options)
+    @@options = DEFAUTLS.merge!(options)
+  end
+
+  def self.get_options
+    @@options
+  end
+
   class CLI
     def self.error_exit(report)
       DashTimelineValidator::Log.info(report)
       exit(-1)
     end
 
-    def self.main(manifest)
+    def self.main(manifest, options = {})
+      DashTimelineValidator.set_options(options)
       begin
         FileUtils.mkdir_p DashTimelineValidator::Options::ANALYZER_FOLDER
         DashTimelineValidator::Log.info("The manifest #{manifest} will be processed at #{DashTimelineValidator::Options::ANALYZER_FOLDER} folder.")
