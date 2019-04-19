@@ -2,10 +2,10 @@ require "fileutils"
 
 module DashTimelineValidator
   DEFAUTLS = {
-    :acceptable_drift => true,
-    :presentation_delay => 10,
-    :buffered_segments => 2,
-    :verify_segments_duration => false
+    "acceptable_drift" => true,
+    "presentation_delay" => 10,
+    "buffered_segments" => 2,
+    "verify_segments_duration" => false
   }
 
   def self.set_options(options)
@@ -13,7 +13,7 @@ module DashTimelineValidator
   end
 
   def self.get_option(name)
-    @@options[name.to_s]
+    @@options[name]
   end
 
   class CLI
