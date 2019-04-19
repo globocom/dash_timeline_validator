@@ -25,12 +25,12 @@ module DashTimelineValidator
           current_segment_time = current_segment[:t]
           expected_segment_time = (previous_segment[:t] + (previous_segment[:d]) * (1 + previous_segment[:r]))
           drift = (expected_segment_time - current_segment_time).abs
-          if drift > DashTimelineValidator.get_options[:acceptable_drift]
+          if drift > DashTimelineValidator.get_option("acceptable_drift")
             previous["S"].push(DashTimelineValidator::Report.report_warn("Timeline of <S d='#{current_segment[:d]}' t='#{current_segment[:t]}'/> was expected to be #{expected_segment_time}, but is #{current_segment_time} (drift = #{drift})"))
           end
         end
 
-        if DashTimelineValidator::get_options[:verify_segments_duration]
+        if DashTimelineValidator::get_option("verify_segments_duration")
           (current_segment[:r].to_i + 1).times do |i|
             duration_report = check_segment_duration(context, current_segment, current_segment_number, i.zero?)
             previous["S"].push(duration_report) if duration_report

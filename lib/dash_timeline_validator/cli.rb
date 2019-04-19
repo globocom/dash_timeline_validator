@@ -12,8 +12,8 @@ module DashTimelineValidator
     @@options = DEFAUTLS.merge!(options)
   end
 
-  def self.get_options
-    @@options
+  def self.get_option(name)
+    @@options[name.to_s]
   end
 
   class CLI
