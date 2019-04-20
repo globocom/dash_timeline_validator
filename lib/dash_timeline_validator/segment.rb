@@ -45,13 +45,13 @@ module DashTimelineValidator
       init = context[:previous]["initialization"]
       media = context[:previous]["media"]
       base_path = context[:root]["base_path"]
-      init_path = "#{DashTimelineValidator::Options::ANALYZER_FOLDER}/#{init}"
+      init_path = "#{DashTimelineValidator.get_option("analyzer_folder")}/#{init}"
 
       DashTimelineValidator::DashFile.fetch_file("#{base_path}/#{init}", init_path) if download_init
 
       segment_file = media.gsub("$Number$", current_segment_number.to_s)
-      segment_path = "#{DashTimelineValidator::Options::ANALYZER_FOLDER}/#{segment_file}"
-      full_segment_path = "#{DashTimelineValidator::Options::ANALYZER_FOLDER}/#{segment_file}".gsub(".", "-complete.")
+      segment_path = "#{DashTimelineValidator.get_option("analyzer_folder")}/#{segment_file}"
+      full_segment_path = "#{DashTimelineValidator.get_option("analyzer_folder")}/#{segment_file}".gsub(".", "-complete.")
       DashTimelineValidator::DashFile.fetch_file("#{base_path}/#{segment_file}", segment_path)
 
       `cat #{init_path} #{segment_path} > #{full_segment_path}`

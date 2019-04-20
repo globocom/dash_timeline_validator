@@ -2,7 +2,7 @@ require "net/http"
 
 module DashTimelineValidator
   class DashFile
-    def self.fetch_file(origin, file_path = Options::ANALYZER_MANIFEST_PATH)
+    def self.fetch_file(origin, file_path = DashTimelineValidator::ANALYZER_MANIFEST_PATH)
       dirname = File.dirname(file_path)
       unless File.directory? dirname
         FileUtils.mkdir_p(dirname)
