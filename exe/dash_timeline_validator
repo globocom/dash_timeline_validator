@@ -10,9 +10,11 @@ OptionParser.new do |opts|
     opts.banner = <<-BANNER
     DASH Timeline Validator #{DashTimelineValidator::VERSION}
     
-    Usage: dash_timeline_validator uri <arguments>
+    Usage: dash_timeline_validator <manifest> [options]
+
+    manifest - either a URI or local path
     
-    Arguments:
+    Options:
     BANNER
     
     opts.on("--acceptable_drift=ACCEPTABLE_DRIFT", "Minimum duration drift acceptable between the sequential segments", Integer) do |v|
