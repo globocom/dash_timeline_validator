@@ -7,7 +7,7 @@ This tool allows you to validate your [MPEG Dash](https://en.wikipedia.org/wiki/
 ## Docker Usage
 
 ```
-docker run -e VERIFY_SEGMENTS_DURATION=false --rm -it anafrombr/dash_timeline_validator https://storage.googleapis.com/shaka-live-assets/player-source.mpd
+docker run --rm -it anafrombr/dash_timeline_validator https://storage.googleapis.com/shaka-live-assets/player-source.mpd --verify_segments_duration false 
 ```
 
 ## Installation
@@ -28,20 +28,28 @@ Or install it yourself as:
 
 ## Usage
 
-Run this program passing the manifest path.
+Run this program passing the manifest path. It can be either a URI or local path.
 
 ```
 dash_timeline_validator https://storage.googleapis.com/shaka-live-assets/player-source.mpd
 ```
 
+Running the program without any parameters or using `h` will show usage instruction along with optional parameters.
+
 ### Options
 
-- `ACCEPTABLE_DRIFT *(default 2)*` - the minimum duration drift acceptable between the sequential segments
-- `DEFAULT_PRESENTATION_DELAY *(default 10)*` - the delay in seconds of the live edge
-- `BUFFERED_SEGMENTS *(default 2)*` - the number of segments buffered by the player to generate the live edge
-- `VERIFY_SEGMENTS_DURATION *(default false)*` - check the duration of every segment when setted to `true` (warn: this will download every segment of the manifest)
-- `ANALYZER_FOLDER *(default "data/[HASH]")*` - folder used to download the files
-- `ANALYZER_MANIFEST_PATH *(default "#{ANALYZER_FOLDER}/manifest.mpd")*` - manifest path
+- `acceptable_drift *(default 2)*` - the minimum duration drift acceptable between the sequential segments
+- `presentation_delay *(default 10)*` - the delay in seconds of the live edge
+- `buffered_segments *(default 2)*` - the number of segments buffered by the player to generate the live edge
+- `verify_segments_duration *(default false)*` - check the duration of every segment when setted to `true` (warn: this will download every segment of the manifest)
+- `analyzer_folder *(default "data/[HASH]")*` - folder used to download the files
+- `analyzer_manifest_path *(default "#{analyzer_folder}/manifest.mpd")*` - manifest path
+
+Example:
+
+```
+dash_timeline_validator https://storage.googleapis.com/shaka-live-assets/player-source.mpd --acceptable_drift 2
+```
 
 ### What does it validates?
 
