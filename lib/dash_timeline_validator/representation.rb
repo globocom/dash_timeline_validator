@@ -37,11 +37,11 @@ module DashTimelineValidator
       max_duration = ss.map { |s| s[:d].to_i }.max / timescale
       min_buffer_time = context[:root]["mpd"]["minBufferTime"]
       suggested_resentation_delay = context[:root]["mpd"]["suggestedPresentationDelay"]
-      default_presentation_delay = [DashTimelineValidator::Options::DEFAULT_PRESENTATION_DELAY, (min_buffer_time * 1.5)].max
+      default_presentation_delay = [DashTimelineValidator.get_option("presentation_delay"), (min_buffer_time * 1.5)].max
       timeline_delay = suggested_resentation_delay.nil? ? default_presentation_delay : suggested_resentation_delay
 
       # suggested streaming edge based on shaka's behavior
-      streaming_edge = client_wallclock - ast - DashTimelineValidator::Options::BUFFERED_SEGMENTS * max_duration - timeline_delay
+      streaming_edge = client_wallclock - ast - DashTimelineValidator.get_option("buffered_segments") * max_duration - timeline_delay
 
       last_segment = ss.last
       last_available_time = (last_segment[:t].to_i + (last_segment[:d].to_i * last_segment[:r].to_i)) / timescale

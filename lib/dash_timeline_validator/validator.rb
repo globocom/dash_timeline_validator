@@ -10,7 +10,7 @@ module DashTimelineValidator
         uri = URI(manifest)
         report["base_path"] = DashTimelineValidator::Report.report_info("#{uri.scheme}://#{uri.host}#{uri.path.split("/").reverse.drop(1).reverse.join("/")}")
       else
-        report["base_path"] = DashTimelineValidator::Report.report_info(DashTimelineValidator::DashFile::ANALYZER_FOLDER)
+        report["base_path"] = DashTimelineValidator::Report.report_info(DashTimelineValidator.get_option("analyzer_folder"))
       end
 
       begin

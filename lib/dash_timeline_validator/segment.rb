@@ -25,12 +25,12 @@ module DashTimelineValidator
           current_segment_time = current_segment[:t]
           expected_segment_time = (previous_segment[:t] + (previous_segment[:d]) * (1 + previous_segment[:r]))
           drift = (expected_segment_time - current_segment_time).abs
-          if drift > DashTimelineValidator::Options::ACCEPTABLE_DRIFT
+          if drift > DashTimelineValidator.get_option("acceptable_drift")
             previous["S"].push(DashTimelineValidator::Report.report_warn("Timeline of <S d='#{current_segment[:d]}' t='#{current_segment[:t]}'/> was expected to be #{expected_segment_time}, but is #{current_segment_time} (drift = #{drift})"))
           end
         end
 
-        if DashTimelineValidator::Options::VERIFY_SEGMENTS_DURATION
+        if DashTimelineValidator::get_option("verify_segments_duration")
           (current_segment[:r].to_i + 1).times do |i|
             duration_report = check_segment_duration(context, current_segment, current_segment_number, i.zero?)
             previous["S"].push(duration_report) if duration_report
@@ -45,13 +45,13 @@ module DashTimelineValidator
       init = context[:previous]["initialization"]
       media = context[:previous]["media"]
       base_path = context[:root]["base_path"]
-      init_path = "#{DashTimelineValidator::Options::ANALYZER_FOLDER}/#{init}"
+      init_path = "#{DashTimelineValidator.get_option("analyzer_folder")}/#{init}"
 
       DashTimelineValidator::DashFile.fetch_file("#{base_path}/#{init}", init_path) if download_init
 
       segment_file = media.gsub("$Number$", current_segment_number.to_s)
-      segment_path = "#{DashTimelineValidator::Options::ANALYZER_FOLDER}/#{segment_file}"
-      full_segment_path = "#{DashTimelineValidator::Options::ANALYZER_FOLDER}/#{segment_file}".gsub(".", "-complete.")
+      segment_path = "#{DashTimelineValidator.get_option("analyzer_folder")}/#{segment_file}"
+      full_segment_path = "#{DashTimelineValidator.get_option("analyzer_folder")}/#{segment_file}".gsub(".", "-complete.")
       DashTimelineValidator::DashFile.fetch_file("#{base_path}/#{segment_file}", segment_path)
 
       `cat #{init_path} #{segment_path} > #{full_segment_path}`
